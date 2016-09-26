@@ -36,6 +36,13 @@ The web application is used also to display the caller ID of an incoming call tr
 
   ![Download it](docs/client_secrets_download.png)
 
+### Cloning the repository
+
+```
+git clone git@github.com:Snomio/google-contacts-poc.git
+cd google-contacts-poc
+```
+
 ### Running from the Docker container
 
 The easiest way to run this application is to use the self-contained application distributed via a Docker image
@@ -64,14 +71,24 @@ In order to have data persistence and not loose the OAuth token is suggested to 
 The sync script needs the environment variable `CLIENT_SECRETS_JSON` defining the path to the client secrets file
 
 ```
-docker run -it -p 8080:8080 \
-	-v $(pwd)/client_secrets.json:/data/client_secrets.json\
-	-v -v $(pwd)/client_secrets-datastore.json:/data/client_secrets-datastore.json \
+$ touch client_secrets.dat
+$ touch client_secrets-datastore.json
+$ docker run -it -p 8080:8080 \
+	-v $(pwd)/client_secrets.json:/data/client_secrets.json \
+	-v $(pwd)/client_secrets-datastore.json:/data/client_secrets-datastore.json \
 	-v $(pwd)/client_secrets.dat:/data/client_secrets.dat \
 	-e CLIENT_SECRETS_JSON=/data/client_secrets.json \
 	-e PHONE_URL=http://172.16.18.62 \
 	-e APP_URL=http://172.16.18.15:8080 \
 	snom-gcontacts sync
+	
+Go to the following link in your browser:
+https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcontacts.readonly&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&response_type=code&client_id=xxxxxyyyyy.apps.googleusercontent.com&access_type=offline
+
+Enter verification code: *********************
+Authentication successful.
+Found 25 Personal Contacts
+Found 25 contacts in group 'Snom'
 ```
 
 #### Start the web application
