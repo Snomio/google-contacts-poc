@@ -91,6 +91,21 @@ Found 25 Personal Contacts
 Found 25 contacts in group 'Snom'
 ```
 
+#### Configure the phone
+
+The Docker entry point script provides the `phoneconf` which configure remotely the setting `action_incoming_url` and `dkey_directory`:
+
+```
+$ docker run -it -p 8080:8080 \
+	-v $(pwd)/client_secrets.json:/data/client_secrets.json \
+	-v $(pwd)/client_secrets-datastore.json:/data/client_secrets-datastore.json \
+	-v $(pwd)/client_secrets.dat:/data/client_secrets.dat \
+	-e CLIENT_SECRETS_JSON=/data/client_secrets.json \
+	-e PHONE_URL=http://172.16.18.62 \ # You will have to change it with your PHONE URL
+	-e APP_URL=http://172.16.18.15:8080 \ # You will have to change it with your APP URL
+	snom-gcontacts phoneconf
+```
+
 #### Start the web application
 
 ```

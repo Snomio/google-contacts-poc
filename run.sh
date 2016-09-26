@@ -28,10 +28,11 @@ function phone_conf(){
     [[ "${PHONE_URL}x" == "x" ]] && bailout "missing PHONE_URL env. variable"
     [[ "${APP_URL}x" == "x" ]] && bailout "missing APP_URL env. variable"
 
-    curl -s -G --data-urlencode "settings=save" \
+    echo "Configuring the phone settings"
+    curl -v -G --data-urlencode "settings=save" \
             --data-urlencode "dkey_directory=url ${APP_URL}/snom" \
             --data-urlencode "action_incoming_url=${APP_URL}/snom/lookup?number=\$remote"\
-            /${PHONE_URL}/dummy.htm
+            ${PHONE_URL}/dummy.htm
 }
 
 case $1 in
