@@ -1,3 +1,4 @@
 client_secrets*
+!docs/client_secrets*
 *.pyc
 .swp
