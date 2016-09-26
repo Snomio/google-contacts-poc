@@ -1,0 +1,20 @@
+$def with (data)
+<?xml version="1.0" encoding="utf-8"?>
+<SnomIPPhoneMenu track="no" speedselect="off">
+        <Title>Search result</Title>
+    $for group in data['contacts']:
+        $for item in data['contacts'][group]:
+            <MenuItem name="&#60171; $item['title'] ($group)">
+                <URL>${app_path("snom/contact/%s/%d" % (group, item['id']))}</URL>
+            </MenuItem>
+    <SoftKeyItem>
+        <Name>F3</Name>
+        <Label>Back</Label>
+        <URL>${app_path("snom")}</URL>
+    </SoftKeyItem>
+    <SoftKeyItem>
+        <Name>F4</Name>
+        <Label>search</Label>
+        <URL>${app_path("snom")}/search</URL>
+    </SoftKeyItem>
+</SnomIPPhoneMenu>

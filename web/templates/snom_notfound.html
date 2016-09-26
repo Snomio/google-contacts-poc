@@ -1,0 +1,17 @@
+$def with (message)
+<?xml version="1.0" encoding="utf-8"?>
+<SnomIPPhoneText>
+    <Title>Page not found</Title>
+    <Text>
+        ERROR: 
+        $if message:
+            $message
+        $else:
+            Page not found
+    </Text>
+    <SoftKeyItem>
+        <Name>F3</Name>
+        <Label>Back</Label>
+        <URL>${app_path("snom")}</URL>
+    </SoftKeyItem>    
+</SnomIPPhoneText>

@@ -1,0 +1,16 @@
+$def with (data)
+<?xml version="1.0" encoding="utf-8"?>
+<SnomIPPhoneText state="relevant">
+    <Title>&#60260; Ringing</Title>
+        <Text>
+        $data['contact']['title']<br/>
+        $for num in data['contact']['phones']:
+            $if data['number'] == num:
+                &#60168; $num<br/>
+            $else:
+                &#60260; $num<br/>
+        $if len(data['contact']['organizations']) > 0:
+            $for org in data['contact']['organizations']:
+                &#60259; Company: $org['name']<br/>
+    </Text>
+</SnomIPPhoneText>

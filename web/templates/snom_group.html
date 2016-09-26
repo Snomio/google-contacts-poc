@@ -1,0 +1,40 @@
+$def with (data)
+<?xml version="1.0" encoding="utf-8"?>
+<SnomIPPhoneMenu track="no" speedselect="off">
+        <Title>$data['group']</Title>
+    $for item in data['contacts']:
+        <MenuItem name="&#60171; $item['title']">
+            <URL>${app_path("snom/contact/%s/%d" % (data['group'], item['id']))}</URL>
+        </MenuItem>
+
+    $if data['prev_page'] < 0:
+        <SoftKeyItem>
+            <Name>F1</Name>
+            <Label>Last</Label>
+            <URL>${app_path("snom/group/%s/%d" % (data['group'], data['max_pages']))}</URL>
+        </SoftKeyItem>
+    $else:
+        <SoftKeyItem>
+            <Name>F1</Name>
+            <Label>Prev</Label>
+            <URL>${app_path("snom/group/%s/%d" % (data['group'], data['prev_page']))}</URL>
+        </SoftKeyItem>
+    $if data['next_page'] > data['max_pages']:
+        <SoftKeyItem>
+            <Name>F2</Name>
+            <Label>Beginning</Label>
+            <URL>${app_path("snom/group/%s" % data['group'])}</URL>
+        </SoftKeyItem>
+    $else:
+        <SoftKeyItem>
+            <Name>F2</Name>
+            <Label>Next</Label>
+            <URL>${app_path("snom/group/%s/%d" % (data['group'], data['next_page']))}</URL>
+        </SoftKeyItem>
+    <SoftKeyItem>
+        <Name>F3</Name>
+        <Label>Back</Label>
+        <URL>${app_path("snom")}</URL>
+    </SoftKeyItem>
+
+</SnomIPPhoneMenu>

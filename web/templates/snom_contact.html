@@ -1,0 +1,26 @@
+$def with (data)
+<?xml version="1.0" encoding="utf-8"?>
+<SnomIPPhoneMenu track="no" speedselect="off">
+        <Title>$data['contact']['title']</Title>
+        $if len(data['contact']['phones']) == 0:
+            <MenuItem name="&#60187; No phone number found">
+        $else:
+            $for num in data['contact']['phones']:
+                <MenuItem name="&#60171; $num">
+                    <URL>snom://mb_nop#numberdial=$num</URL>
+                </MenuItem>
+        $for email in data['contact']['emails']:
+            <MenuItem name="&#60240; $email"/>
+        $for org in  data['contact']['organizations']:
+            <MenuItem name="&#60259; $org['name']"/>
+    <SoftKeyItem>
+        <Name>F3</Name>
+        <Label>Back</Label>
+        <URL>${app_path("snom")}/group/$data['group']</URL>
+    </SoftKeyItem>
+    <SoftKeyItem>
+        <Name>F4</Name>
+        <Label>search</Label>
+        <URL>${app_path("snom")}/search</URL>
+    </SoftKeyItem>
+</SnomIPPhoneMenu>

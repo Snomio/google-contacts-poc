@@ -1,0 +1,12 @@
+$def with (groups)
+<?xml version="1.0" encoding="utf-8"?>
+<SnomIPPhoneMenu speedselect="off" track="no">
+        <Title>Google Addressbook</Title>
+        <MenuItem name="&#60195; Search">
+            <URL>${app_path("snom/search")}</URL>
+        </MenuItem>
+    $for g in groups:
+        <MenuItem name="&#60171; $g">
+        <URL>${app_path("snom/group/%s" % g)}</URL>
+        </MenuItem>
+</SnomIPPhoneMenu>
