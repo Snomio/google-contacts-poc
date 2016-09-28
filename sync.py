@@ -62,7 +62,7 @@ class SyncGoogleContacts:
                         )
             return groups
         else:
-            raise Exception("Error getting the list of groups, received: %s" %res)
+            raise Exception("Error getting the list of groups, received: %s\n\n" % (res, content))
         
 
     def get_contacts(self, group_id=None):
@@ -107,7 +107,7 @@ class SyncGoogleContacts:
                 contacts.append(c)
             return contacts    
         else:
-            raise Exception("Error getting contacts: received: %s" % res)
+            raise Exception("Error getting contacts: received: %s\n\n" % (res, content))
 
     def store_all_contacts(self):
         self.store = {}
