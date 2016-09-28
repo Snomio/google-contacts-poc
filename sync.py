@@ -60,7 +60,7 @@ class SyncGoogleContacts:
                 groups.append(
                         {'name': name, 'id': id}
                         )
-                return groups
+            return groups
         else:
             raise Exception("Error getting the list of groups, received: %s" %res)
         
@@ -75,6 +75,8 @@ class SyncGoogleContacts:
             data = json.loads(content.decode('utf8'))
             contacts = []
             id = 0
+            if 'entry' not in data['feed']:
+                return contacts
             for gdata in data['feed']['entry']:
                 c = {}
                 c['id'] = id

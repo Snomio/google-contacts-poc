@@ -24,15 +24,24 @@ The web application is used also to display the caller ID of an incoming call tr
 
 ### Obtaining the OAuth Client ID
 
-1) In order to start the application you need to create and download a `client secrets` JSON file from the [Google API Console](https://console.developers.google.com/apis/).
+1) In order to start the application you need to enable the contacts API [Google API Console](https://console.developers.google.com/apis/)
+
+  ![Google Contacts API](docs/contacts-api.png)
+  
+  Enable the API:
+  
+  ![Enable the API](docs/enable-api.png)
+
+
+2) Once you enabled the API you need to create and download a `client secrets` JSON file from the [Google API Console](https://console.developers.google.com/apis/).
 
   ![Creating the client secrets](docs/create_client_secrets.png)
 
-2) The file must be generated creating an OAuth *client ID*, selecting the Application type as *other*.
+3) The file must be generated creating an OAuth *client ID*, selecting the Application type as *other*.
 
   ![Select the secret type](docs/select_type.png)
 
-3) Downloading the file:
+4) Downloading the file:
 
   ![Download it](docs/client_secrets_download.png)
 
