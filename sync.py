@@ -54,6 +54,8 @@ class SyncGoogleContacts:
         if res['status'] == "200":
             data = json.loads(content.decode('utf8'))
             groups = []
+            if 'entry' not in data['feed']:
+                return groups
             for gdata in data['feed']['entry']:
                 name = gdata['title']['$t']
                 id = gdata['id']['$t']
