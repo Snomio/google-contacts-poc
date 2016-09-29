@@ -154,6 +154,8 @@ containing the path of the client_secrets file:
 CLIENT_SECRETS_JSON=client_secrets.json python ./sync.py
 ```
 
+By default the sync script downloads at maximum 1000 entries, you can change this value defining the environmental variable **MAX_RESULTS**
+
 The first run the application will ask you to visit a google link and then paste the authorisation code received trough the link.
 
 ### Running the web application
