@@ -96,7 +96,10 @@ class snom_contact:
 
 class snom_group:
     def GET(self, group, page=0):
-        page_items = 2
+        if 'PAGE_ITEMS' in os.environ.keys():
+            page_items = int(os.environ['PAGE_ITEMS'])
+        else:
+            page_items = 2
         page = int(page)
         store = get_data()
         web.header('Content-Type', 'text/xml')

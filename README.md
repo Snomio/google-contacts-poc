@@ -166,7 +166,13 @@ The web application can be started with the following command:
 cd web && python ./app.py
 ```
 
-By default the application is listening on the port 8080
+By default the application is listening on the port 8080, if you want to change it you have to pass the port number as a first argument:
+
+```
+cd web && python ./app.py 8090
+```
+
+By default results are paginated with every 2 entries, you can configure the number of entries per page trough the environment variable **PAGE_ITEMS**
 
 ### Configuring the phone
 
