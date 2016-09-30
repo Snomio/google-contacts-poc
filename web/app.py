@@ -50,7 +50,7 @@ class snom_lookup:
                 contact = (item for item in items if number in item["phones"]).next()
                 return render.snom_lookup({'contact': contact, 'number': number})
             except StopIteration:
-                return
+                continue
         return
 
 class snom_search:
