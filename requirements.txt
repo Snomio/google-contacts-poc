@@ -8,3 +8,4 @@ six==1.10.0
 uritemplate==0.6
 virtualenv==15.0.3
 web.py==0.38
+google-api-python-client==1.5.5
