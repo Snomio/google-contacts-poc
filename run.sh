@@ -2,11 +2,18 @@
 
 function do_help(){
 cat << EOF
-Usage: $0 <sync|run|syncandrun|shell|phoneconf>"
-    sync:   The sync commnd downloads locally the contacts
+Usage: $0 <sync|syncdir|run|syncandrun|shell|phoneconf>"
+    sync:   The sync command downloads locally the contacts
             In order to access the Google contacts the script
             needs the client secrets file. Such file can be obtained
             from the Google API console (https://console.developers.google.com/apis/ )
+            The file can be generated creating an OAuth ID, selecting Application type = other
+
+    syncdir:  The sync command downloads locally the gsuite contacts domain directory
+            In order to access the Google contacts directory the script
+            needs the client secrets file. Such file can be obtained
+            from the Google API console (https://console.developers.google.com/apis/ )
+            You need to activate  Admin SDK API.
             The file can be generated creating an OAuth ID, selecting Application type = other
 
     run:    The run command start the local http server serving the XML applications
@@ -45,6 +52,11 @@ case $1 in
         python /data/sync.py --noauth_local_webserver $@
         ;;
 
+    syncdir)
+        shift
+        python /data/sync_directory.py --noauth_local_webserver $@
+        ;;
+
     run)
         shift
         cd /data/web && python /data/web/app.py $@
@@ -60,7 +72,7 @@ case $1 in
         ;;
 
     *)
-        echo "ERROR: you can use the following commands: sync, run, shell"
+        echo "ERROR: you can use the following commands: sync, syncdir, run, shell"
         do_help
         ;;
 esac

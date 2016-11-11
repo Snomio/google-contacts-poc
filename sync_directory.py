@@ -4,6 +4,7 @@
 from __future__ import print_function
 
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -20,7 +21,6 @@ from oauth2client import tools
 
 from apiclient import discovery
 from oauth2client.file import Storage
-
 
 # Native application Client ID JSON from the Google Developers Console,
 # store in the same directory as this script:
@@ -70,9 +70,9 @@ class SyncGoogleDirectoryContacts:
         if not credentials or credentials.invalid:
             flow = client.flow_from_clientsecrets(CLIENT_SECRETS_JSON, SCOPES)
             flow.user_agent = APPLICATION_NAME
-            #if flags:
+            # if flags:
             if args:
-                #credentials = tools.run_flow(flow, store, flags)
+                # credentials = tools.run_flow(flow, store, flags)
                 credentials = tools.run_flow(flow, store, args)
             else:  # Needed only for compatibility with Python 2.6
                 credentials = tools.run(flow, store)
@@ -94,6 +94,9 @@ class SyncGoogleDirectoryContacts:
         self.token = self.credentials.authorize(self.token)
 
     def get_groups(self):
+        """ todo: Groups implementation goes here
+        """
+
         return []
 
         res, content = self.token.request('https://www.google.com/m8/feeds/groups/default/thin?alt=json', method='GET')
@@ -113,22 +116,21 @@ class SyncGoogleDirectoryContacts:
             raise Exception("Error getting the list of groups, received: %s\n\n" % (res, content))
 
     def get_contacts(self, group_id=None):
+        """ Creates a Google Admin SDK API service object and outputs a list of first
+            100 users in the domain.
+        """
+
         if group_id:
             query_str = '&group={0}'.format(group_id)
         else:
             query_str = ''
 
-        """Shows basic usage of the Google Admin SDK Directory API.
-
-            Creates a Google Admin SDK API service object and outputs a list of first
-            10 users in the domain.
-            """
         credentials = self.get_credentials()
 
         http = credentials.authorize(httplib2.Http())
         service = discovery.build('admin', 'directory_v1', http=http)
 
-        print('Getting the first 10 users in the domain')
+        print('Getting the first 100 users in the domain')
         results = service.users().list(
             customer='my_customer',
             maxResults=100,
@@ -150,7 +152,7 @@ class SyncGoogleDirectoryContacts:
             id = 0
             for user in users:
                 c = {}
-                #c['id'] = id
+                # c['id'] = id
                 c['id'] = int(user['id'])
 
                 c['emails'] = [user['primaryEmail']]
@@ -161,7 +163,7 @@ class SyncGoogleDirectoryContacts:
                     phones = []
                 c['phones'] = phones
 
-                #todo: fix title
+                # todo: fix title
                 # if 'title' in user:
                 #     title = user['organisations'][0]['name']
                 # else:
