@@ -65,7 +65,7 @@ docker build -t snom-gcontacts .
 The image runs an entrypoint script which accepts the following parameters:
 
 * sync: runs the synchronisation script
-* syncdir: runs the synchronisation script with G Suite global Directory
+* syncdir: runs the synchronisation script with G Suite global Directory (needs Google Admin SDK API enabled)
 * run: run the web application serving the phone book and the caller-lookup service
 * runandsync: first run the sync and then the the run script
 * phoneconf: configure the settings `dkey_directory` and the `action_incoming_url`pointing to the web application (application URL must be defined via the `APP_URL` environment variable)
