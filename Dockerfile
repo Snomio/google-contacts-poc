@@ -4,6 +4,7 @@ RUN mkdir -p /data/web
 
 COPY requirements.txt /data/
 COPY sync.py /data/
+COPY sync_directory.py /data/
 COPY web/ /data/web/
 COPY run.sh /data/
 
