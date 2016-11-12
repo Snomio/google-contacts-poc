@@ -1,7 +1,7 @@
 # Google Contacts integration Proof of Concept
 
 #### DISCLAIMER:
-This is just a proof of concept application demostrating a possible Google Contacts integration.
+This is just a proof of concept application demostrating a possible Google Contacts or G Suite global Directory integration.
 *The application is not suitable for production environments*.
 
 ## Concept
@@ -65,6 +65,7 @@ docker build -t snom-gcontacts .
 The image runs an entrypoint script which accepts the following parameters:
 
 * sync: runs the synchronisation script
+* syncdir: runs the synchronisation script with G Suite global Directory
 * run: run the web application serving the phone book and the caller-lookup service
 * runandsync: first run the sync and then the the run script
 * phoneconf: configure the settings `dkey_directory` and the `action_incoming_url`pointing to the web application (application URL must be defined via the `APP_URL` environment variable)

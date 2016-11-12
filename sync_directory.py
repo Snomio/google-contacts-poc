@@ -12,11 +12,8 @@ import os
 import os.path
 import json
 import httplib2
-import codecs
 
-from pprint import pprint
 from oauth2client import client
-from oauth2client import file
 from oauth2client import tools
 
 from apiclient import discovery
@@ -26,7 +23,7 @@ from oauth2client.file import Storage
 # store in the same directory as this script:
 CLIENT_SECRETS_JSON = 'client_secrets.json'
 SCOPES = 'https://www.googleapis.com/auth/admin.directory.user'
-APPLICATION_NAME = 'Directory API SnomSync'
+APPLICATION_NAME = 'G Suite global Directory SnomSync'
 
 parser = tools.argparser
 args = parser.parse_args()
@@ -45,8 +42,7 @@ class SyncGoogleDirectoryContacts:
         self._token_filename = os.path.splitext(client_secrets)[0] + '-directory.dat'
         self.datastore = os.path.splitext(client_secrets)[0] + '-datastore.json'
         self._client_secrets = client_secrets
-        self._scope = 'https://www.googleapis.com/auth/admin.directory.user https://www.googleapis.com/auth/admin.directory.user'
-        self._user_agent = 'SnomSync'
+        self._scope = SCOPES
 
     def get_credentials(self):
         """Gets valid user credentials from storage.
@@ -57,73 +53,32 @@ class SyncGoogleDirectoryContacts:
         Returns:
             Credentials, the obtained credential.
         """
-        # home_dir = os.path.expanduser('~')
-        # credential_dir = os.path.join(home_dir, '.credentials')
-        # if not os.path.exists(credential_dir):
-        #     os.makedirs(credential_dir)
-        # credential_path = os.path.join(credential_dir,
-        #                                'admin-directory_v1-python-quickstart.json')
 
         credential_path = self._token_filename
         store = Storage(credential_path)
         credentials = store.get()
         if not credentials or credentials.invalid:
-            flow = client.flow_from_clientsecrets(CLIENT_SECRETS_JSON, SCOPES)
+            flow = client.flow_from_clientsecrets(self._client_secrets, self._scope)
             flow.user_agent = APPLICATION_NAME
-            # if flags:
+
             if args:
-                # credentials = tools.run_flow(flow, store, flags)
                 credentials = tools.run_flow(flow, store, args)
             else:  # Needed only for compatibility with Python 2.6
                 credentials = tools.run(flow, store)
             print('Storing credentials to ' + credential_path)
         return credentials
 
-    def get_auth_token(self, non_interactive=False):
-        flow = client.flow_from_clientsecrets(self._client_secrets, scope=self._scope,
-                                              message=tools.message_if_missing(self._client_secrets))
-        storage = file.Storage(self._token_filename)
-        self.credentials = storage.get()
-        if self.credentials is None or self.credentials.invalid:
-            if non_interactive:
-                sys.stderr.write(
-                    'ERROR: Invalid or missing Oauth2 credentials. To reset auth flow manually, run without --non_interactive\n')
-            else:
-                self.credentials = tools.run_flow(flow, storage, args)
-        self.token = httplib2.Http()
-        self.token = self.credentials.authorize(self.token)
-
     def get_groups(self):
-        """ todo: Groups implementation goes here
+        """
+        todo: Groups implementation goes here
         """
 
         return []
-
-        res, content = self.token.request('https://www.google.com/m8/feeds/groups/default/thin?alt=json', method='GET')
-        if res['status'] == "200":
-            data = json.loads(content.decode('utf8'))
-            groups = []
-            if 'entry' not in data['feed']:
-                return groups
-            for gdata in data['feed']['entry']:
-                name = gdata['title']['$t']
-                id = gdata['id']['$t']
-                groups.append(
-                    {'name': name, 'id': id}
-                )
-            return groups
-        else:
-            raise Exception("Error getting the list of groups, received: %s\n\n" % (res, content))
 
     def get_contacts(self, group_id=None):
         """ Creates a Google Admin SDK API service object and outputs a list of first
             100 users in the domain.
         """
-
-        if group_id:
-            query_str = '&group={0}'.format(group_id)
-        else:
-            query_str = ''
 
         credentials = self.get_credentials()
 
@@ -199,7 +154,6 @@ class SyncGoogleDirectoryContacts:
 
 def main():
     g = SyncGoogleDirectoryContacts(CLIENT_SECRETS_JSON)
-    g.get_auth_token()
     g.store_all_contacts()
 
 

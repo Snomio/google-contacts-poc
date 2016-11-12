@@ -9,11 +9,11 @@ Usage: $0 <sync|syncdir|run|syncandrun|shell|phoneconf>"
             from the Google API console (https://console.developers.google.com/apis/ )
             The file can be generated creating an OAuth ID, selecting Application type = other
 
-    syncdir:  The sync command downloads locally the gsuite contacts domain directory
-            In order to access the Google contacts directory the script
+    syncdir:  The sync command downloads locally the G Suite global Directory
+            In order to access the G Suite global Directory the script
             needs the client secrets file. Such file can be obtained
             from the Google API console (https://console.developers.google.com/apis/ )
-            You need to activate  Admin SDK API.
+            You need to activate Admin SDK API.
             The file can be generated creating an OAuth ID, selecting Application type = other
 
     run:    The run command start the local http server serving the XML applications
